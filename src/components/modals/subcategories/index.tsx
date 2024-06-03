@@ -1,24 +1,35 @@
 import useCategoryStore from "../../../store/category";
 import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+
 const MyModal: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { createCategory, getCategories } = useCategoryStore();
+  const { createCategory, getSubCategory, getCategories } = useCategoryStore();
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+  const { id } = useParams();
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  const handleSubmit = async (value: any) => {
+
+  const handleSubmit = async (values: any) => {
     setLoading(true);
-    const response = await createCategory(value);
+    const category = {
+      category_name: values.category_name,
+      parent_category_id: Number(id),
+    };
+    const response = await createCategory(category);
     if (response?.status === 201) {
+      getSubCategory(id);
       getCategories();
       setIsModalVisible(false);
       form.resetFields();
     }
     setLoading(false);
   };
+
   return (
     <>
       <Button
@@ -26,20 +37,20 @@ const MyModal: React.FC = () => {
         size="large"
         type="primary"
       >
-        Add New Category
+        Add New Subategory
       </Button>
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
         title="Add New Category"
-        footer
+        footer={null}
         style={{ maxWidth: "450px" }}
       >
         <Form
           form={form}
           name="basic"
           style={{ width: "100%", marginTop: "20px" }}
-          onFinish={(values) => handleSubmit(values)}
+          onFinish={handleSubmit}
           layout="vertical"
         >
           <Form.Item
@@ -66,4 +77,5 @@ const MyModal: React.FC = () => {
     </>
   );
 };
+
 export default MyModal;

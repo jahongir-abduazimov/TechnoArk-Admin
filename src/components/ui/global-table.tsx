@@ -11,7 +11,7 @@ const App: React.FC<TableProps> = ({columns, data, boolean }) => {
       dataSource={data}
       bordered
       pagination={false}
-      scroll={{ y: 470 }}
+      scroll={{ y: 405 }}
     />
   );
 };

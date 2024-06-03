@@ -27,4 +27,9 @@ export const routes: Route[] = [
         content: "Categories",
         icon: <AppstoreOutlined style={{fontSize: 20}} />
     },
+    {
+        path: "/brands",
+        content: "Brands",
+        icon: <AppstoreOutlined style={{fontSize: 20}} />
+    },
 ]

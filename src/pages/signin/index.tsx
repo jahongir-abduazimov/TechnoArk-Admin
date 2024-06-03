@@ -5,14 +5,17 @@ import { useNavigate } from "react-router-dom";
 import Notification from "@notification";
 import useAuthStore from "../../store/auth";
 import { setDataToCookie } from "@data-service";
+import { useState } from "react";
 const index = () => {
   const { getData } = useAuthStore();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (value: any) => {
+    setLoading(true);
     const response = await getData(value);
     if (response?.status === 201) {
-      setDataToCookie('access_token', response.data.tokens.access_token)
-      setDataToCookie('refresh_token', response.data.tokens.refresh_token)
+      setDataToCookie("access_token", response.data.tokens.access_token);
+      setDataToCookie("refresh_token", response.data.tokens.refresh_token);
       Notification({
         title: response.data.msg,
         type: "success",
@@ -24,6 +27,7 @@ const index = () => {
         type: "error",
       });
     }
+    setLoading(false);
   };
   return (
     <div className="w-[100%] h-[100vh] flex">
@@ -63,9 +67,19 @@ const index = () => {
                 size="large"
                 type="primary"
                 htmlType="submit"
+                loading={loading}
               >
                 Submit
               </Button>
+              <div className="flex mt-2 items-center gap-2">
+                <p className="text-[16px]">Don’t you have an account?</p>
+                <p
+                  onClick={() => navigate("/signup")}
+                  className="cursor-pointer text-[16px] hover:text-blue font-semibold duration-150"
+                >
+                  Registrate
+                </p>
+              </div>
             </Form.Item>
           </Form>
         </div>

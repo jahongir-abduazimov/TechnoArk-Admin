@@ -5,16 +5,22 @@ import Notification from "@notification";
 
 const useCategoryStore = create<CategoryStore>((set) => ({
   categories: [],
+  subCategories: [],
   isLoading: false,
   getCategories: async () => {
     set({ isLoading: true });
     try {
       const response = await category.get_categories();
-      set({ categories: response.data.categories});
+      if (response.status === 200) {
+        set({ categories: response.data.categories });
+      }
       set({ isLoading: false });
       return response;
-    } catch (error) {
-      console.error(error);
+    } catch (error:any) {
+      Notification({
+        title: error.message,
+        type: "error"
+      })
     }
   },
   createCategory: async (data: any) => {
@@ -31,9 +37,10 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         return response;
       }
       return response;
-    } catch (error) {
+    } catch (error:any) {
+      console.log(error);
       Notification({
-        title: "Something went wrong!",
+        title: "Somthing went wrong!",
         type: "error",
       });
     }
@@ -63,11 +70,28 @@ const useCategoryStore = create<CategoryStore>((set) => ({
           title: response.data.message,
           type: "success",
         });
+        set((state) => ({
+          categories: state.categories.filter((item: any) => item.id != id),
+          subCategories:state.subCategories.filter((item: any) => item.id != id),
+        }));
       }
       return response;
     } catch (error) {
+      console.error(error);
+    }
+  },
+  getSubCategory: async (id: any) => {
+    set({ isLoading: true });
+    try {
+      const response = await category.get_subcategory(id);
+      if (response.status === 200) {
+        set({ subCategories: response.data.categories });
+      }
+      set({ isLoading: false });
+      return response;
+    } catch (error:any) {
       Notification({
-        title: "Something went wrong!",
+        title: error.message,
         type: "error",
       });
     }
