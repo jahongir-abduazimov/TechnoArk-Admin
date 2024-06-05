@@ -1,9 +1,10 @@
-import useCategoryStore from "../../../store/category";
+import useBrandsStore from "../../../store/brands";
 import { Button, Form, Input, Modal } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 const MyModal: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { createCategory } = useCategoryStore();
+  const { getBrands, createBrand } = useBrandsStore();
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const handleCancel = () => {
@@ -11,8 +12,10 @@ const MyModal: React.FC = () => {
   };
   const handleSubmit = async (value: any) => {
     setLoading(true);
-    const response = await createCategory(value);
+    const response = await createBrand({ ...value, position: 1 });
+    console.log(response);
     if (response?.status === 201) {
+      // getBrands();
       setIsModalVisible(false);
       form.resetFields();
     }
@@ -25,7 +28,7 @@ const MyModal: React.FC = () => {
         size="large"
         type="primary"
       >
-        Add New Category
+        Add New Brand
       </Button>
       <Modal
         open={isModalVisible}
@@ -42,13 +45,26 @@ const MyModal: React.FC = () => {
           layout="vertical"
         >
           <Form.Item
-            label="Category name"
-            name="category_name"
+            label="Brand name"
+            name="brand_name"
             rules={[{ required: true, message: "Enter category name" }]}
           >
             <Input size="large" />
           </Form.Item>
-
+          <Form.Item
+            label="Brand image"
+            name="image"
+            rules={[{ required: true, message: "Enter brand description" }]}
+          >
+            <Input type="file" size="large" />
+          </Form.Item>
+          <Form.Item
+            label="Brand description"
+            name="brand_description"
+            rules={[{ required: true, message: "Enter brand description" }]}
+          >
+            <TextArea size="large" />
+          </Form.Item>
           <Form.Item>
             <Button
               size="large"

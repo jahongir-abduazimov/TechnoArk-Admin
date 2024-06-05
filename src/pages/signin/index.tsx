@@ -68,8 +68,9 @@ const index = () => {
                 type="primary"
                 htmlType="submit"
                 loading={loading}
+                iconPosition="end"
               >
-                Submit
+                Login
               </Button>
               <div className="flex mt-2 items-center gap-2">
                 <p className="text-[16px]">Don’t you have an account?</p>

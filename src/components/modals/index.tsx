@@ -3,4 +3,7 @@ import LogOut from "./logout";
 import DeleteModal from "./delete-category";
 import UpdateCategory from "./category-update";
 import SubCategory from "./subcategories";
-export { Category, LogOut, DeleteModal, UpdateCategory, SubCategory };
+import Brand from "./brands";
+import DeleteBrands from './delate-brand'
+import UpdateBrands from './brand-update'
+export { Category, LogOut, DeleteModal, UpdateCategory, SubCategory, Brand, DeleteBrands, UpdateBrands };

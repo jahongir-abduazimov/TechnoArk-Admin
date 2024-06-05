@@ -3,8 +3,8 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { routes } from "../router/router";
-import {LogOut} from "@modals"
-import './index.css'
+import { LogOut } from "@modals";
+import "./index.css";
 
 const { Header, Sider, Content } = Layout;
 
@@ -54,7 +54,7 @@ const App: React.FC = () => {
             <Menu.Item
               icon={item.icon}
               key={index}
-              className={item.path === pathname ? "ant-menu-items" : ""}
+              className={item.path === pathname || pathname.slice(0,9) == "/categorie" ? "ant-menu-items" : ""}
             >
               <NavLink to={item.path} key={index}>
                 <span className="text-[17px]">{item.content}</span>

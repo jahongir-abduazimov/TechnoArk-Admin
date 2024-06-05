@@ -7,7 +7,7 @@ import {
 
 import App from "../App";
 
-import { Home, SignIn, SignUp, Products, Category, SubCategory, Brands } from "@pages";
+import { Home, SignIn, SignUp, Products, Category, SubCategory, Brands, Settings } from "@pages";
 const index = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -19,6 +19,7 @@ const index = () => {
           <Route path="/categories" element={<Category />} />
           <Route path="/categories/:id" element={<SubCategory />} />
           <Route path="/brands" element={<Brands />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Route>
     )

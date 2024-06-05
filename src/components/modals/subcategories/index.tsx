@@ -22,8 +22,6 @@ const MyModal: React.FC = () => {
     };
     const response = await createCategory(category);
     if (response?.status === 201) {
-      getSubCategory(id);
-      getCategories();
       setIsModalVisible(false);
       form.resetFields();
     }
@@ -68,8 +66,9 @@ const MyModal: React.FC = () => {
               type="primary"
               htmlType="submit"
               loading={loading}
+              iconPosition="end"
             >
-              Submit
+              Add
             </Button>
           </Form.Item>
         </Form>

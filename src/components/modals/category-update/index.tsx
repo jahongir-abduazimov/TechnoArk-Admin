@@ -14,10 +14,6 @@ const MyModal: React.FC = ({ record }: any) => {
     setLoading(true);
     const response = await updateCategory(record.id, value);
     if (response?.status === 200) {
-      getCategories();
-      if (record.parent_category_id) {
-        getSubCategory(record.parent_category_id);
-      }
       setIsModalVisible(false);
       form.resetFields();
     }
@@ -56,6 +52,7 @@ const MyModal: React.FC = ({ record }: any) => {
               type="primary"
               htmlType="submit"
               loading={loading}
+              iconPosition="end"
             >
               Submit
             </Button>

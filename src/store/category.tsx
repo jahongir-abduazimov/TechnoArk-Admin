@@ -16,11 +16,12 @@ const useCategoryStore = create<CategoryStore>((set) => ({
       }
       set({ isLoading: false });
       return response;
-    } catch (error:any) {
+    } catch (error: any) {
+      set({isLoading: false})
       Notification({
         title: error.message,
-        type: "error"
-      })
+        type: "error",
+      });
     }
   },
   createCategory: async (data: any) => {
@@ -28,7 +29,8 @@ const useCategoryStore = create<CategoryStore>((set) => ({
       const response = await category.create_category(data);
       if (response.status === 201) {
         set((state) => ({
-          categories: [...state.categories, response?.data.categories],
+          categories: [...state.categories, response?.data.category],
+          subCategories: [...state.subCategories, response?.data.category],
         }));
         Notification({
           title: response.data.message,
@@ -37,7 +39,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         return response;
       }
       return response;
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error);
       Notification({
         title: "Somthing went wrong!",
@@ -53,6 +55,14 @@ const useCategoryStore = create<CategoryStore>((set) => ({
           title: response.data.message,
           type: "success",
         });
+        set((state) => ({
+          categories: state.categories.map((item: any) =>
+            item.id === id? response.data.category : item
+          ),
+          subCategories: state.subCategories.map((item: any) =>
+            item.id === id? response.data.category : item
+          ),
+        }));
       }
       return response;
     } catch (error) {
@@ -72,7 +82,9 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         });
         set((state) => ({
           categories: state.categories.filter((item: any) => item.id != id),
-          subCategories:state.subCategories.filter((item: any) => item.id != id),
+          subCategories: state.subCategories.filter(
+            (item: any) => item.id != id
+          ),
         }));
       }
       return response;
@@ -89,13 +101,14 @@ const useCategoryStore = create<CategoryStore>((set) => ({
       }
       set({ isLoading: false });
       return response;
-    } catch (error:any) {
+    } catch (error: any) {
+      set({ isLoading: false });
       Notification({
         title: error.message,
         type: "error",
       });
     }
-  }
+  },
 }));
 
 export default useCategoryStore;

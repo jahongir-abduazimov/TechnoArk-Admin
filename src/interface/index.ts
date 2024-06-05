@@ -42,6 +42,29 @@ export interface CategoryStore {
   getSubCategory: (id: any) => Promise<any>;
 }
 
+// ------------ Brands ----------------
+
+export interface Brand {
+  brand_name: string;
+  brand_description: string;
+}
+
+export interface BrandRequest {
+  get_brands: () => any;
+  create_brand: (data: Brand) => any;
+  delete_brand: (id: string) => any;
+  update_brand: (id: string, data: Brand) => any;
+}
+
+export interface BrandStore {
+  brand: any[];
+  isLoading: boolean;
+  getBrands: () => Promise<any>;
+  createBrand: (data: Brand) => Promise<any>;
+  deleteBrand: (id: string) => Promise<any>;
+  updateBrand: (id: string, data: Brand) => Promise<any>;
+}
+
 // ------------ Global ----------------
 
 export interface TableProps {

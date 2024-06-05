@@ -1,5 +1,4 @@
 import Table from "../../components/ui/global-table";
-
 import { Category } from "@modals";
 import useCategoryStore from "../../store/category";
 import { useEffect } from "react";

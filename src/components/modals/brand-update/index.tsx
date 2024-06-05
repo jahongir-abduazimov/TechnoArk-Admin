@@ -1,18 +1,20 @@
-import useCategoryStore from "../../../store/category";
+import useBrandsStore from "../../../store/brands";
 import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
-const MyModal: React.FC = () => {
+import { EditOutlined } from "@ant-design/icons";
+import TextArea from "antd/es/input/TextArea";
+const MyModal: React.FC = ({ record }: any) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { createCategory } = useCategoryStore();
-  const [loading, setLoading] = useState(false);
+  const { updateBrand } = useBrandsStore();
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
   const handleCancel = () => {
     setIsModalVisible(false);
   };
   const handleSubmit = async (value: any) => {
     setLoading(true);
-    const response = await createCategory(value);
-    if (response?.status === 201) {
+    const response = await updateBrand(record.id, value);
+    if (response?.status === 200) {
       setIsModalVisible(false);
       form.resetFields();
     }
@@ -20,17 +22,11 @@ const MyModal: React.FC = () => {
   };
   return (
     <>
-      <Button
-        onClick={() => setIsModalVisible(true)}
-        size="large"
-        type="primary"
-      >
-        Add New Category
-      </Button>
+      <Button onClick={() => setIsModalVisible(true)} icon={<EditOutlined />} />
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
-        title="Add New Category"
+        title="Update category"
         footer
         style={{ maxWidth: "450px" }}
       >
@@ -42,11 +38,20 @@ const MyModal: React.FC = () => {
           layout="vertical"
         >
           <Form.Item
-            label="Category name"
-            name="category_name"
+            label="Brand name"
+            name="brand_name"
             rules={[{ required: true, message: "Enter category name" }]}
+            initialValue={record?.brand_name}
           >
             <Input size="large" />
+          </Form.Item>
+          <Form.Item
+            label="Brand description"
+            name="brand_description"
+            rules={[{ required: true, message: "Enter category name" }]}
+            initialValue={record?.brand_description}
+          >
+            <TextArea size="large" />
           </Form.Item>
 
           <Form.Item>
@@ -58,7 +63,7 @@ const MyModal: React.FC = () => {
               loading={loading}
               iconPosition="end"
             >
-              Add
+              Submit
             </Button>
           </Form.Item>
         </Form>

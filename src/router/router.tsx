@@ -3,6 +3,7 @@ import {
     HomeOutlined,
     ProductOutlined,
     AppstoreOutlined,
+    SettingOutlined,
   } from '@ant-design/icons';
 
 interface Route{
@@ -31,5 +32,10 @@ export const routes: Route[] = [
         path: "/brands",
         content: "Brands",
         icon: <AppstoreOutlined style={{fontSize: 20}} />
+    },
+    {
+        path: "/settings",
+        content: "Settings",
+        icon: <SettingOutlined style={{fontSize: 20}} />
     },
 ]
