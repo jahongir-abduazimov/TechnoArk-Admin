@@ -2,7 +2,8 @@ import { create } from "zustand";
 import { AuthStore } from "@interfaces";
 import { auth } from "@services";
 import Notification from "@notification";
-const useAuthStore = create<AuthStore>(() => ({
+const useAuthStore = create<AuthStore>((set) => ({
+  data:[],
   getData: async (data: any) => {
     try {
       const response = await auth.sign_in(data);
@@ -16,19 +17,35 @@ const useAuthStore = create<AuthStore>(() => ({
       const response = await auth.sign_up(data);
       return response;
     } catch (error:any) {
-      if (typeof error.response.data.message === "string") {
-        Notification({
-          title: error.response.data.message,
-          type: "error",
-        })
-      } else {
-        error.response.data.message.map((item: any) => (
-          Notification({
-            title: item,
-            type: "error",
-          })
-        ));
+      console.log(error);
+      Notification({
+        title: error.response.data.message,
+        type: "error",
+      })
+    }
+  },
+  getAdmin: async (id) => {
+    try {
+      const response = await auth.get_admin(id);
+      console.log(response);
+      if (response.status === 200) {
+        set({ data: response.data.data });
       }
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  updateAdmin: async (id, data) => {
+    try {
+      const response = await auth.update_admin(id, data);
+      console.log(response);
+      // if (response.status === 200) {
+      //   set({ data: response.data.data });
+      // }
+      return response;
+    } catch (error) {
+      console.log(error);
     }
   }
 }));

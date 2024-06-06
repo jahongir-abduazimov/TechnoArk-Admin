@@ -13,17 +13,17 @@ const index = () => {
   const handleSubmit = async (value: any) => {
     setLoading(true);
     const response = await getData(value);
-    if (response?.status === 201) {
-      setDataToCookie("access_token", response.data.tokens.access_token);
-      setDataToCookie("refresh_token", response.data.tokens.refresh_token);
+    if (response?.status === 200) {
+      setDataToCookie("access_token", response.data.data.token);
+      setDataToCookie("admin_id", response.data.data.admin.id);
       Notification({
-        title: response.data.msg,
+        title: "Login successfully",
         type: "success",
       });
       navigate("/");
     } else {
       Notification({
-        title: "Email or password is incorrect",
+        title: "Phone number or password is incorrect",
         type: "error",
       });
     }
@@ -44,9 +44,11 @@ const index = () => {
             layout="vertical"
           >
             <Form.Item
-              label="Email"
-              name="email"
-              rules={[{ type: "email", required: true }]}
+              label="Phone number"
+              name="phone_number"
+              rules={[
+                { required: true, message: "Please input your phone number!" },
+              ]}
             >
               <Input size="large" />
             </Form.Item>

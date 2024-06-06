@@ -10,8 +10,7 @@ const App: React.FC<TableProps> = ({columns, data, boolean }) => {
       columns={columns}
       dataSource={data}
       bordered
-      pagination={false}
-      scroll={{ y: 405 }}
+      scroll={{ y: 343 }}
     />
   );
 };

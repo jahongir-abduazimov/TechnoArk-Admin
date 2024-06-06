@@ -24,8 +24,8 @@ const index = () => {
     },
     {
       title: "Category name",
-      dataIndex: "category_name",
-      key: "category_name",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Action",

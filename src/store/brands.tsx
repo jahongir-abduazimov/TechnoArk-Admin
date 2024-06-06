@@ -6,12 +6,12 @@ import Notification from "@notification";
 const useBrandsStore = create<BrandStore>((set) => ({
   brand: [],
   isLoading: false,
-  getBrands: async () => {
+  getBrands: async (params) => {
     set({ isLoading: true });
     try {
-      const response = await brands.get_brands();
+      const response = await brands.get_brands(params);
       if (response.status === 200) {
-        set({ brand: response.data.brands });
+        set({ brand: response.data.data.brands });
       }
       set({ isLoading: false });
       return response;
@@ -28,7 +28,7 @@ const useBrandsStore = create<BrandStore>((set) => ({
       const response = await brands.create_brand(data);
       if (response.status === 201) {
         set((state) => ({
-          brand: [...state.brand, response.data.brand],
+          brand: [...state.brand, response.data.data],
         }));
         Notification({
           title: response.data.message,

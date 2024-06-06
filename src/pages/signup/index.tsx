@@ -12,6 +12,7 @@ const index = () => {
   const handleSubmit = async (value: any) => {
     setLoading(true);
     const response = await createData(value);
+    console.log(response);
     if (response?.status === 201) {
       Notification({
         title: "Successfully registered",

@@ -12,7 +12,7 @@ const MyModal: React.FC = () => {
   };
   const out = () => {
     removeDataFromCookie('access_token')
-    removeDataFromCookie('refresh_token')
+    removeDataFromCookie('admin_id')
     navigate('/signin')
     window.location.reload()
   }

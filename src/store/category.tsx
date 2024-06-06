@@ -7,12 +7,12 @@ const useCategoryStore = create<CategoryStore>((set) => ({
   categories: [],
   subCategories: [],
   isLoading: false,
-  getCategories: async () => {
+  getCategories: async (params) => {
     set({ isLoading: true });
     try {
-      const response = await category.get_categories();
+      const response = await category.get_categories(params);
       if (response.status === 200) {
-        set({ categories: response.data.categories });
+        set({ categories: response.data.data.categories });
       }
       set({ isLoading: false });
       return response;
@@ -29,7 +29,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
       const response = await category.create_category(data);
       if (response.status === 201) {
         set((state) => ({
-          categories: [...state.categories, response?.data.category],
+          categories: [...state.categories, response?.data.data],
           subCategories: [...state.subCategories, response?.data.category],
         }));
         Notification({
@@ -57,10 +57,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         });
         set((state) => ({
           categories: state.categories.map((item: any) =>
-            item.id === id? response.data.category : item
-          ),
-          subCategories: state.subCategories.map((item: any) =>
-            item.id === id? response.data.category : item
+            item.id === id? response.data.data : item
           ),
         }));
       }
@@ -82,22 +79,23 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         });
         set((state) => ({
           categories: state.categories.filter((item: any) => item.id != id),
-          subCategories: state.subCategories.filter(
-            (item: any) => item.id != id
-          ),
         }));
       }
       return response;
     } catch (error) {
-      console.error(error);
+      Notification({
+        title: "Something went wrong!",
+        type: "error",
+      });
     }
   },
   getSubCategory: async (id: any) => {
     set({ isLoading: true });
     try {
       const response = await category.get_subcategory(id);
+      console.log(response);
       if (response.status === 200) {
-        set({ subCategories: response.data.categories });
+        set({ subCategories: response.data.data.categories });
       }
       set({ isLoading: false });
       return response;

@@ -1,20 +1,22 @@
 import Table from "../../components/ui/global-table";
 import { Category } from "@modals";
 import useCategoryStore from "../../store/category";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DeleteModal, UpdateCategory } from "@modals";
 import { EyeOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 const index = () => {
   const { getCategories, isLoading, categories } = useCategoryStore();
   const navigate = useNavigate();
-  const getData = async () => {
-    await getCategories();
-  };
+  const [params, setParams] = useState({
+    limit: 10,
+    page: 1,
+    search: "",
+  });
   useEffect(() => {
-    getData();
-  }, []);
+    getCategories(params);
+  }, [params]);
   const columns = [
     {
       title: "№",
@@ -25,9 +27,8 @@ const index = () => {
     },
     {
       title: "Category name",
-      dataIndex: "category_name",
-      key: "category_name",
-      
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Action",
@@ -37,15 +38,25 @@ const index = () => {
         <div className="flex gap-3">
           <UpdateCategory record={record} />
           <DeleteModal record={record} />
-          <Button onClick={()=>navigate(`/categories/${record.id}`)} icon={<EyeOutlined />}/>
+          <Button
+            onClick={() => navigate(`/categories/${record.id}`)}
+            icon={<EyeOutlined />}
+          />
         </div>
       ),
     },
   ];
-
+  const search = (value: any) => {
+    setParams((prevParams) => ({ ...prevParams, search: value }));
+  };
   return (
     <>
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <Input
+          onChange={(e) => search(e.target.value)}
+          placeholder="Search category..."
+          style={{ width: "300px" }}
+        />
         <Category />
       </div>
       <Table columns={columns} data={categories} boolean={isLoading} />

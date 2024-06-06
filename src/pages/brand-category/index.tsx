@@ -1,17 +1,19 @@
+import useBrandCategoryStore from "../../store/brand-category";
+import Table from "@global-table";
 import { useEffect, useState } from "react";
-import useBrandsStore from "../../store/brands";
-import GlobalTable from "@global-table";
-import { Brand, UpdateBrands } from "@modals";
-import { DeleteBrands } from "@modals";
+import { AddBrandCategory } from "@modals";
+import { DeleteBrandCategory } from "@modals";
+import { UpdateBrandCategory } from "@modals";
 import { Input } from "antd";
 const index = () => {
-  const { getBrands, isLoading, brand } = useBrandsStore();
+  const { getBrandCategory, brand_category, isLoading } =
+    useBrandCategoryStore();
   const [params, setParams] = useState({
     limit: 10,
     page: 1,
   });
   useEffect(() => {
-    getBrands(params);
+    getBrandCategory(params);
   }, [params]);
   const columns = [
     {
@@ -22,7 +24,7 @@ const index = () => {
       width: "52px",
     },
     {
-      title: "Brands name",
+      title: "Category name",
       dataIndex: "name",
       key: "name",
     },
@@ -32,26 +34,26 @@ const index = () => {
       key: "action",
       render: (_: any, record: any) => (
         <div className="flex gap-3">
-          <UpdateBrands record={record} />
-          <DeleteBrands record={record} />
+          <UpdateBrandCategory record={record} />
+          <DeleteBrandCategory record={record} />
         </div>
       ),
     },
   ];
-  const search = (value: any) => {
+  const search = (value:any) => {
     setParams((prevParams) => ({ ...prevParams, search: value }));
-  };
+  }
   return (
     <>
       <div className="flex justify-between">
         <Input
           onChange={(e) => search(e.target.value)}
-          placeholder="Search brand..."
+          placeholder="Search category brand..."
           style={{ width: "300px" }}
         />
-        <Brand />
+        <AddBrandCategory />
       </div>
-      <GlobalTable columns={columns} data={brand} boolean={isLoading} />
+      <Table columns={columns} data={brand_category} boolean={isLoading} />
     </>
   );
 };

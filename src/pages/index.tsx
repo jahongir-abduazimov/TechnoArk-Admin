@@ -6,4 +6,5 @@ import Category from "./category";
 import SubCategory from "./subcategory";
 import Brands from "./brands";
 import Settings from "./settings";
-export { Home, SignIn, SignUp, Products, Category, SubCategory, Brands, Settings };
+import BrandCategory from './brand-category'
+export { Home, SignIn, SignUp, Products, Category, SubCategory, Brands, Settings, BrandCategory };
