@@ -3,7 +3,8 @@ import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
-const MyModal: React.FC = ({ record }: any) => {
+import { SomeComponentProps } from "@interfaces";
+const MyModal: React.FC<SomeComponentProps> = ({ record }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { updateBrand } = useBrandsStore();
   const [form] = Form.useForm();

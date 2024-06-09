@@ -143,3 +143,7 @@ export interface TableProps {
   data: { key: string; name: string }[];
   boolean: boolean;
 }
+
+export interface SomeComponentProps {
+  record: any;
+}

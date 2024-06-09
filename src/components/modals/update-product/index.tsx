@@ -5,7 +5,8 @@ import useProductStore from "../../../store/products";
 import { Button, Form, Input, Modal, Select } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
-const MyModal: React.FC = ({ record }: any) => {
+import { SomeComponentProps } from "@interfaces"
+const MyModal: React.FC<SomeComponentProps> = ({ record }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { getCategories } = useCategoryStore();
   const { updateProduct } = useProductStore();

@@ -3,7 +3,9 @@ import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import useBrandCategoryStore from "../../../store/brand-category";
 import useBrandsStore from "../../../store/brands";
-const MyModal: React.FC = ({ record }: any) => {
+import {SomeComponentProps} from "@interfaces";
+
+const MyModal: React.FC<SomeComponentProps> = ({ record }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { updateBrandCategory } = useBrandCategoryStore();
   const { getBrands } = useBrandsStore();

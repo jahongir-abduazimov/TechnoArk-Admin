@@ -2,8 +2,9 @@ import { Button, Modal } from "antd";
 import { useState } from "react";
 import { DeleteOutlined } from "@ant-design/icons";
 import useProductStore from "../../../store/products";
+import { SomeComponentProps } from "@interfaces"
 
-const MyModal: React.FC = ({ record }: any) => {
+const MyModal: React.FC<SomeComponentProps> = ({ record }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { deleteProduct } = useProductStore();
   const [loading, setLoading] = useState(false);
