@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const index = () => {
   const { getCategories, isLoading, categories } = useCategoryStore();
   const navigate = useNavigate();
+  
   const [params, setParams] = useState({
     limit: 10,
     page: 1,
@@ -53,9 +54,10 @@ const index = () => {
     <>
       <div className="flex justify-between">
         <Input
-          onChange={(e) => search(e.target.value)}
+          onChange={(e: any) => search(e.target.value)}
           placeholder="Search category..."
-          style={{ width: "300px" }}
+          style={{ width: 300 }}
+          size="large"
         />
         <Category />
       </div>

@@ -15,6 +15,7 @@
             "@notification": ["./src/utils/notification.ts"],
             "@data-service": ["./src/utils/data-service.ts"],
             "@global-table": ["./src/components/ui/global-table.tsx"],
+            "@global-pagination": ["./src/components/ui/global-pagination.tsx"],
         },
         /* Bundler mode */
         "moduleResolution": "bundler",

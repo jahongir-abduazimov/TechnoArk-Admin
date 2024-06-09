@@ -4,7 +4,8 @@ import { Button, Input, Form } from "antd";
 import { useNavigate } from "react-router-dom";
 import Notification from "@notification";
 import useAuthStore from "../../store/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getDataFromCookie } from "@data-service";
 const index = () => {
   const { createData } = useAuthStore();
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,6 @@ const index = () => {
   const handleSubmit = async (value: any) => {
     setLoading(true);
     const response = await createData(value);
-    console.log(response);
     if (response?.status === 201) {
       Notification({
         title: "Successfully registered",
@@ -22,6 +22,11 @@ const index = () => {
     }
     setLoading(false);
   };
+  useEffect(() => {
+    if (getDataFromCookie("access_token")) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div className="w-[100%] h-[100vh] flex">
       <div className="w-[50%] bg-[#1677ff10] flex items-center justify-center">

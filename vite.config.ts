@@ -13,6 +13,7 @@ export default defineConfig({
       { find: '@notification', replacement: '/src/utils/notification.ts' },
       { find: '@data-service', replacement: '/src/utils/data-service.ts' },
       { find: '@global-table', replacement: '/src/components/ui/global-table.tsx' },
+      { find: '@global-pagination', replacement: '/src/components/ui/global-pagination.tsx' },
     ]
   }
 })

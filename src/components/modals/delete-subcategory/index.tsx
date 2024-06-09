@@ -1,18 +1,18 @@
 import { Button, Modal } from "antd";
 import { useState } from "react";
+import useCategoryStore from "../../../store/category";
 import { DeleteOutlined } from "@ant-design/icons";
-import useBrandCategoryStore from "../../../store/brand-category";
 
 const MyModal: React.FC = ({ record }: any) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { deleteBrandCategory } = useBrandCategoryStore();
+  const { deleteSubCategory } = useCategoryStore();
   const [loading, setLoading] = useState(false);
   const handleCancel = () => {
     setIsModalVisible(false);
   };
   const deleteData = async (id: number) => {
     setLoading(true);
-    const response = await deleteBrandCategory(id);
+    const response = await deleteSubCategory(id);
     if (response?.status === 200) {
       setIsModalVisible(false);
     }
@@ -28,7 +28,7 @@ const MyModal: React.FC = ({ record }: any) => {
         open={isModalVisible}
         onCancel={handleCancel}
         style={{ maxWidth: "400px" }}
-        title="Delete this brand category?"
+        title="Delete this subcategory?"
         footer={
           <div className="flex items-center gap-3 justify-end mt-10">
             <Button size="large" type="default" onClick={handleCancel}>

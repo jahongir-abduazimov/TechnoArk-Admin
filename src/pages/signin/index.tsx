@@ -4,8 +4,8 @@ import { Button, Input, Form } from "antd";
 import { useNavigate } from "react-router-dom";
 import Notification from "@notification";
 import useAuthStore from "../../store/auth";
-import { setDataToCookie } from "@data-service";
-import { useState } from "react";
+import { getDataFromCookie, setDataToCookie } from "@data-service";
+import { useEffect, useState } from "react";
 const index = () => {
   const { getData } = useAuthStore();
   const navigate = useNavigate();
@@ -13,9 +13,11 @@ const index = () => {
   const handleSubmit = async (value: any) => {
     setLoading(true);
     const response = await getData(value);
-    if (response?.status === 200) {
-      setDataToCookie("access_token", response.data.data.token);
-      setDataToCookie("admin_id", response.data.data.admin.id);
+    console.log(response);
+    if (response?.status === 201) {
+      setDataToCookie("access_token", response.data.data.tokens.access_token);
+      setDataToCookie("refresh_token", response.data.data.tokens.refresh_token);
+      setDataToCookie("admin_id", response.data.data.data.id);
       Notification({
         title: "Login successfully",
         type: "success",
@@ -29,6 +31,11 @@ const index = () => {
     }
     setLoading(false);
   };
+  useEffect(() => {
+    if (getDataFromCookie("access_token")) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div className="w-[100%] h-[100vh] flex">
       <div className="w-[50%] bg-[#1677ff10] flex items-center justify-center">

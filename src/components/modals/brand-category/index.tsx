@@ -53,7 +53,7 @@ const MyModal: React.FC = () => {
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
-        title="Add New Category"
+        title="Add new brand category"
         footer
         style={{ maxWidth: "450px" }}
       >

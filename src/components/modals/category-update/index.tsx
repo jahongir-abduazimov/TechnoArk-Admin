@@ -2,6 +2,12 @@ import useCategoryStore from "../../../store/category";
 import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
+interface User {
+  key?: string;
+  name?: string;
+  age?: number;
+  address?: string;
+}
 const MyModal: React.FC = ({ record }: any) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { updateCategory } = useCategoryStore();

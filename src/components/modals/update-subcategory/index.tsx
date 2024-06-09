@@ -1,18 +1,25 @@
 import useCategoryStore from "../../../store/category";
 import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
-const MyModal: React.FC = () => {
+import { EditOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
+const MyModal: React.FC = ({ record }: any) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { createCategory } = useCategoryStore();
-  const [loading, setLoading] = useState(false);
+  const { updateSubCategory } = useCategoryStore();
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+  const { id } = useParams();
   const handleCancel = () => {
     setIsModalVisible(false);
   };
   const handleSubmit = async (value: any) => {
     setLoading(true);
-    const response = await createCategory(value);
-    if (response?.status === 201) {
+    const category = {
+      name: value.name,
+      parent_category_id: Number(id),
+    };
+    const response = await updateSubCategory(record.id, category);
+    if (response?.status === 200) {
       setIsModalVisible(false);
       form.resetFields();
     }
@@ -20,17 +27,11 @@ const MyModal: React.FC = () => {
   };
   return (
     <>
-      <Button
-        onClick={() => setIsModalVisible(true)}
-        size="large"
-        type="primary"
-      >
-        Add New Category
-      </Button>
+      <Button onClick={() => setIsModalVisible(true)} icon={<EditOutlined />} />
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
-        title="Add new category"
+        title="Update subcategory"
         footer
         style={{ maxWidth: "450px" }}
       >
@@ -45,6 +46,7 @@ const MyModal: React.FC = () => {
             label="Category name"
             name="name"
             rules={[{ required: true, message: "Enter category name" }]}
+            initialValue={record?.name}
           >
             <Input size="large" />
           </Form.Item>
@@ -58,7 +60,7 @@ const MyModal: React.FC = () => {
               loading={loading}
               iconPosition="end"
             >
-              Add
+              Submit
             </Button>
           </Form.Item>
         </Form>

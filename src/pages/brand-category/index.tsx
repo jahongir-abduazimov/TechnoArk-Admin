@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { AddBrandCategory } from "@modals";
 import { DeleteBrandCategory } from "@modals";
 import { UpdateBrandCategory } from "@modals";
-import { Input } from "antd";
+import { Input, Pagination } from "antd";
 const index = () => {
-  const { getBrandCategory, brand_category, isLoading } =
+  const { getBrandCategory, brand_category, isLoading, totalCount } =
     useBrandCategoryStore();
   const [params, setParams] = useState({
     limit: 10,
@@ -43,6 +43,9 @@ const index = () => {
   const search = (value:any) => {
     setParams((prevParams) => ({ ...prevParams, search: value }));
   }
+  const page = (page:any) => {
+    setParams((prevParams) => ({...prevParams, page: page }));
+  }
   return (
     <>
       <div className="flex justify-between">
@@ -54,6 +57,7 @@ const index = () => {
         <AddBrandCategory />
       </div>
       <Table columns={columns} data={brand_category} boolean={isLoading} />
+      <Pagination total={totalCount} onChange={(e)=>page(e)}/>
     </>
   );
 };

@@ -17,7 +17,6 @@ const useAuthStore = create<AuthStore>((set) => ({
       const response = await auth.sign_up(data);
       return response;
     } catch (error:any) {
-      console.log(error);
       Notification({
         title: error.response.data.message,
         type: "error",
@@ -27,25 +26,20 @@ const useAuthStore = create<AuthStore>((set) => ({
   getAdmin: async (id) => {
     try {
       const response = await auth.get_admin(id);
-      console.log(response);
       if (response.status === 200) {
         set({ data: response.data.data });
       }
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
   updateAdmin: async (id, data) => {
     try {
       const response = await auth.update_admin(id, data);
-      console.log(response);
-      // if (response.status === 200) {
-      //   set({ data: response.data.data });
-      // }
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }));

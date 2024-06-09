@@ -5,29 +5,26 @@ import { useParams } from "react-router-dom";
 
 const MyModal: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { createCategory, getSubCategory, getCategories } = useCategoryStore();
+  const { createSubCategory } = useCategoryStore();
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const { id } = useParams();
-
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
   const handleSubmit = async (values: any) => {
     setLoading(true);
     const category = {
-      category_name: values.category_name,
+      name: values.name,
       parent_category_id: Number(id),
     };
-    const response = await createCategory(category);
+    const response = await createSubCategory(category);
     if (response?.status === 201) {
       setIsModalVisible(false);
       form.resetFields();
     }
     setLoading(false);
   };
-
   return (
     <>
       <Button
@@ -40,7 +37,7 @@ const MyModal: React.FC = () => {
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
-        title="Add New Category"
+        title="Add new subcategory"
         footer={null}
         style={{ maxWidth: "450px" }}
       >
@@ -53,12 +50,11 @@ const MyModal: React.FC = () => {
         >
           <Form.Item
             label="Category name"
-            name="category_name"
+            name="name"
             rules={[{ required: true, message: "Enter category name" }]}
           >
             <Input size="large" />
           </Form.Item>
-
           <Form.Item>
             <Button
               size="large"

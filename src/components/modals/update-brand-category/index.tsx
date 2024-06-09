@@ -40,7 +40,6 @@ const MyModal: React.FC = ({ record }: any) => {
     }
     setLoading(false);
   };
-  console.log(record);
   return (
     <>
       <div onClick={getSelectOptions}>
@@ -52,7 +51,7 @@ const MyModal: React.FC = ({ record }: any) => {
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
-        title="Update category"
+        title="Update brand category"
         footer
         style={{ maxWidth: "450px" }}
       >
@@ -75,7 +74,7 @@ const MyModal: React.FC = ({ record }: any) => {
             label="Select brand"
             name="brand_id"
             rules={[{ required: true, message: "Enter category name" }]}
-            initialValue={record?.brand_id.id}
+            initialValue={record?.brand_id}
           >
             <Select loading={selectLoading} size="large" options={brands} />
           </Form.Item>

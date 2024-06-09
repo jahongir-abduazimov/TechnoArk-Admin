@@ -2,14 +2,19 @@ import Table from "../../components/ui/global-table";
 
 import { SubCategory } from "@modals";
 import useCategoryStore from "../../store/category";
-import { useEffect } from "react";
-import { DeleteModal, UpdateCategory } from "@modals";
+import { useEffect, useState } from "react";
+import { DeleteSubCategory, UpdateSubCategory } from "@modals";
 import { useParams } from "react-router-dom";
 const index = () => {
   const { getSubCategory, isLoading, subCategories } = useCategoryStore();
   const { id } = useParams();
+  const [params] = useState({
+    limit: 10,
+    page: 1,
+    search: "",
+  })
   const getData = async () => {
-    await getSubCategory(id);
+    await getSubCategory(id, params);
   };
   useEffect(() => {
     getData();
@@ -33,8 +38,8 @@ const index = () => {
       key: "action",
       render: (_: any, record: any) => (
         <div className="flex gap-3">
-          <UpdateCategory record={record} />
-          <DeleteModal record={record} />
+          <UpdateSubCategory record={record} />
+          <DeleteSubCategory record={record} />
         </div>
       ),
     },

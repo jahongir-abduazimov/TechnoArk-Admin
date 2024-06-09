@@ -31,7 +31,6 @@ const MyModal: React.FC = () => {
   const handleSubmit = async (value: any) => {
     setLoading(true);
     const response = await createBrand(value);
-    console.log(response);
     if (response?.status === 201) {
       setIsModalVisible(false);
       form.resetFields();
@@ -52,9 +51,9 @@ const MyModal: React.FC = () => {
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
-        title="Add New Brand"
+        title="Add new brand"
         footer
-        style={{ maxWidth: "450px" }}
+        style={{ maxWidth: "450px", position: "relative", top: "50px" }}
       >
         <Form
           form={form}

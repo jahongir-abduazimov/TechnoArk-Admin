@@ -48,6 +48,7 @@ const index = () => {
           onChange={(e) => search(e.target.value)}
           placeholder="Search brand..."
           style={{ width: "300px" }}
+          size="large"
         />
         <Brand />
       </div>

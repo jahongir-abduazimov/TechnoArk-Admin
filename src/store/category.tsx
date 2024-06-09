@@ -30,7 +30,6 @@ const useCategoryStore = create<CategoryStore>((set) => ({
       if (response.status === 201) {
         set((state) => ({
           categories: [...state.categories, response?.data.data],
-          subCategories: [...state.subCategories, response?.data.category],
         }));
         Notification({
           title: response.data.message,
@@ -40,7 +39,6 @@ const useCategoryStore = create<CategoryStore>((set) => ({
       }
       return response;
     } catch (error: any) {
-      console.log(error);
       Notification({
         title: "Somthing went wrong!",
         type: "error",
@@ -89,13 +87,12 @@ const useCategoryStore = create<CategoryStore>((set) => ({
       });
     }
   },
-  getSubCategory: async (id: any) => {
+  getSubCategory: async (id, parmas) => {
     set({ isLoading: true });
     try {
-      const response = await category.get_subcategory(id);
-      console.log(response);
+      const response = await category.get_subcategory(id, parmas);
       if (response.status === 200) {
-        set({ subCategories: response.data.data.categories });
+        set({ subCategories: response.data.data.subcategories });
       }
       set({ isLoading: false });
       return response;
@@ -107,6 +104,70 @@ const useCategoryStore = create<CategoryStore>((set) => ({
       });
     }
   },
+  createSubCategory: async (data) => {
+    try {
+      const response = await category.create_subcategory(data);
+      if (response.status === 201) {
+        set((state) => ({
+          subCategories: [...state.subCategories, response.data.data],
+        }));
+        Notification({
+          title: response.data.message,
+          type: "success",
+        });
+      }
+      return response;
+    } catch (error: any) {
+      Notification({
+        title: error.response.data.message,
+        type: "error",
+      });
+    }
+  },
+  deleteSubCategory: async (id: number) => {
+    try {
+      const response = await category.delete_subcategory(id);
+      if (response.status === 200) {
+        Notification({
+          title: response.data.message,
+          type: "success",
+        });
+        set((state) => ({
+          subCategories: state.subCategories.filter(
+            (item: any) => item.id!= id
+          ),
+        }));
+      }
+      return response;
+    } catch (error) {
+      Notification({
+        title: "Something went wrong!",
+        type: "error",
+      });
+    }
+  },
+  updateSubCategory: async (id: number, data) => {
+    try {
+      const response = await category.update_subcategory(id, data);
+      if (response.status === 200) {
+        Notification({
+          title: response.data.message,
+          type: "success",
+        });
+        set((state) => ({
+          subCategories: state.subCategories.map((item: any) =>
+            item.id === id? response.data.data : item
+          ),
+        }));
+      }
+      return response;
+    } catch (error) {
+      Notification({
+        title: "Something went wrong!",
+        type: "error",
+      });
+    }
+  }
 }));
 
 export default useCategoryStore;

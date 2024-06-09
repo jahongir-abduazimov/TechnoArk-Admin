@@ -26,7 +26,7 @@ const MyModal: React.FC = ({ record }: any) => {
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
-        title="Update category"
+        title="Update brand"
         footer
         style={{ maxWidth: "450px" }}
       >
