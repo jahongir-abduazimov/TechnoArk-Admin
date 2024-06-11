@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useStockStore from "../../store/stock";
 import Table from "@global-table";
-import { Stock, DeleteStock } from "@modals";
+import { Stock, DeleteStock, UpdateStock} from "@modals";
 import { Pagination } from "antd";
 const index = () => {
   const { getStocks, stocks, isLoading, totalCount } = useStockStore();
@@ -24,6 +24,7 @@ const index = () => {
       key: "action",
       render: (_: any, record: any) => (
         <div className="flex gap-5">
+          <UpdateStock record={record}/>
           <DeleteStock record={record} />
         </div>
       ),

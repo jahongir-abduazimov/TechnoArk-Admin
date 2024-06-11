@@ -1,3 +1,4 @@
+import useProductStore from "../../../store/products";
 import useBrandsStore from "../../../store/brands";
 import useCategoryStore from "../../../store/category";
 import useStockStore from "../../../store/stock";
@@ -10,14 +11,14 @@ const MyModal: React.FC = () => {
     search: "",
   });
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { createStock, get_stock_by_brand } = useStockStore();
+  const { createStock } = useStockStore();
   const { getCategories } = useCategoryStore();
   const { getBrandsByCategory } = useBrandsStore();
+  const { getProducts } = useProductStore();
   const [loading, setLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [brandDisable, setBrandDisable] = useState(true);
-  const [productDisable, setProductDisable] = useState(true);
   const [brands, setBrands] = useState([]);
   const [productOption, setProductOption] = useState([]);
   const getCategoryOptions = async () => {
@@ -46,19 +47,17 @@ const MyModal: React.FC = () => {
     }
     setBrandDisable(false);
   };
-  const getPtoductOptions = async (id: any) => {
-    setProductDisable(true);
-    const response = await get_stock_by_brand(id);
+  const getPtoductOptions = async () => {
+    const response = await getProducts({limit: 1000, page: 1, search: ""});
     console.log(response);
     if (response?.status === 200) {
       setProductOption(
-        response.data.data.map((item: any) => ({
+        response.data.data.products.map((item: any) => ({
           label: item.name,
           value: item.id,
         }))
       );
     }
-    setProductDisable(false);
   };
   const [form] = Form.useForm();
   const handleCancel = () => {
@@ -82,6 +81,7 @@ const MyModal: React.FC = () => {
   const clickButton = () => {
     setIsModalVisible(true);
     getCategoryOptions();
+    getPtoductOptions()
   };
   return (
     <>
@@ -120,7 +120,7 @@ const MyModal: React.FC = () => {
             rules={[{ required: true, message: "Enter category name" }]}
           >
             <Select
-              onSelect={(value) => getPtoductOptions(value)}
+              onSelect={getPtoductOptions}
               disabled={brandDisable}
               options={brands}
               size="large"
@@ -132,7 +132,6 @@ const MyModal: React.FC = () => {
             rules={[{ required: true, message: "Enter category name" }]}
           >
             <Select
-              disabled={productDisable}
               options={productOption}
               size="large"
             />

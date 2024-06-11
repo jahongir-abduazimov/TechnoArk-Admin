@@ -3,15 +3,17 @@ import useBrandsStore from "../../../store/brands";
 import useCategoryStore from "../../../store/category";
 import useStockStore from "../../../store/stock";
 import { Button, Form, Input, Modal, Select } from "antd";
+import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
-const MyModal: React.FC = () => {
+import { SomeComponentProps } from "@interfaces";
+const MyModal: React.FC<SomeComponentProps> = ({record}) => {
   const [params] = useState({
     limit: 1000,
     page: 1,
     search: "",
   });
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { createStock } = useStockStore();
+  const { updateStock } = useStockStore();
   const { getCategories } = useCategoryStore();
   const { getBrandsByCategory } = useBrandsStore();
   const { getProducts } = useProductStore();
@@ -48,7 +50,8 @@ const MyModal: React.FC = () => {
     setBrandDisable(false);
   };
   const getPtoductOptions = async () => {
-    const response = await getProducts({ limit: 1000, page: 1, search: "" });
+    const response = await getProducts({limit: 1000, page: 1, search: ""});
+    console.log(response);
     if (response?.status === 200) {
       setProductOption(
         response.data.data.products.map((item: any) => ({
@@ -70,28 +73,21 @@ const MyModal: React.FC = () => {
       product_id: value.product_id,
       quantity: Number(value.quantity),
     };
-    const response = await createStock(payload);
-    if (response?.status === 201) {
+    const response = await updateStock(record.id, payload);
+    if (response?.status === 200) {
       setIsModalVisible(false);
       form.resetFields();
     }
     setLoading(false);
   };
   const clickButton = () => {
-    setIsModalVisible(true)
-    getCategoryOptions()
+    setIsModalVisible(true);
+    getCategoryOptions();
     getPtoductOptions()
-  }
-  console.log(productOption);
+  };
   return (
     <>
-        <Button
-          onClick={clickButton}
-          size="large"
-          type="primary"
-        >
-          Add New Stock
-        </Button>
+      <Button onClick={clickButton} icon={<EditOutlined/>}/>
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
@@ -135,7 +131,10 @@ const MyModal: React.FC = () => {
             name="product_id"
             rules={[{ required: true, message: "Enter category name" }]}
           >
-            <Select options={productOption} size="large" />
+            <Select
+              options={productOption}
+              size="large"
+            />
           </Form.Item>
           <Form.Item
             label="Quantity"
