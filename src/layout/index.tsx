@@ -54,7 +54,7 @@ const App: React.FC = () => {
             <Menu.Item
               icon={item.icon}
               key={index}
-              className={item.path === pathname || pathname.slice(0,9) == "/categorie" ? "ant-menu-items" : ""}
+              className={item.path === pathname ? "ant-menu-items" : ""}
             >
               <NavLink to={item.path} key={index}>
                 <span className="text-[17px]">{item.content}</span>

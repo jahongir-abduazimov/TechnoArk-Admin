@@ -11,10 +11,9 @@ const useProductStore = create<ProductStore>((set) => ({
     set({ isLoading: true });
     try {
       const response = await product.get_products(params);
-      console.log(response);
       if (response.status === 200) {
         set({
-          totalCount: Math.ceil(response.data.data.count / params.limit),
+          totalCount: Math.ceil(response.data.data.count),
           products: response.data.data.products,
         });
       }
@@ -27,6 +26,17 @@ const useProductStore = create<ProductStore>((set) => ({
         type: "error",
       });
       console.error(error);
+    }
+  },
+  getProductById: async (id) => {
+    try {
+      const response = await product.get_product_by_id(id);
+      return response;
+    } catch (error: any) {
+      Notification({
+        title: error.message,
+        type: "error",
+      });
     }
   },
   createProduct: async (data) => {

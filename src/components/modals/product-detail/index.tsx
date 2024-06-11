@@ -1,68 +1,54 @@
-import useCategoryStore from "../../../store/category";
-import useBrandsStore from "../../../store/brands";
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
+import useProductDetailStore from "../../../store/product-detail";
+import { useParams } from "react-router-dom";
 const MyModal: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { createBrand } = useBrandsStore();
-  const { getCategories } = useCategoryStore();
+  const { createProductDetail } = useProductDetailStore();
   const [loading, setLoading] = useState(false);
-  const [category, setCategory] = useState([]);
   const [image, setImage] = useState([]);
   const [form] = Form.useForm();
-  const [params] = useState({
-    limit: 10,
-    page: 1,
-  });
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-  const handleChange = async () => {
-    const response = await getCategories(params);
-    if (response?.status === 200) {
-      setCategory(
-        response.data.data.categories.map((item: any) => ({
-          label: item.name,
-          value: item.id,
-        }))
-      );
-    }
-  };
+  const { id } = useParams();
   const handleImageChange = (event: any) => {
     setImage(event.target.files[0]);
+  };
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
   const handleSubmit = async (value: any) => {
     setLoading(true);
     const formData: any = new FormData();
-    formData.append("file", image);
-    formData.append("name", value.name);
-    formData.append("category_id", value.category_id);
+    formData.append("files", image);
+    formData.append("quantity", value.quantity);
+    formData.append("discount", value.discount);
+    formData.append("colors", value.colors);
     formData.append("description", value.description);
-    const response = await createBrand(formData);
+    formData.append("product_id", id);
+    const response = await createProductDetail(formData);
     if (response?.status === 201) {
       setIsModalVisible(false);
       form.resetFields();
+      window.location.reload();
     }
     setLoading(false);
   };
+
   return (
     <>
-      <div onClick={handleChange}>
-        <Button
-          onClick={() => setIsModalVisible(true)}
-          size="large"
-          type="primary"
-        >
-          Add New Brand
-        </Button>
-      </div>
+      <Button
+        onClick={() => setIsModalVisible(true)}
+        size="large"
+        type="primary"
+      >
+        Add detail
+      </Button>
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
-        title="Add new brand"
+        title="Add new category"
         footer
-        style={{ maxWidth: "450px", position: "relative", top: "50px" }}
+        style={{ maxWidth: "450px", position: "relative", top: "0px" }}
       >
         <Form
           form={form}
@@ -72,32 +58,39 @@ const MyModal: React.FC = () => {
           layout="vertical"
         >
           <Form.Item
-            label="Brand name"
-            name="name"
-            rules={[{ required: true, message: "Enter brand name" }]}
+            label="Quantity"
+            name="quantity"
+            rules={[{ required: true, message: "Enter category name" }]}
+          >
+            <Input type="number" size="large" />
+          </Form.Item>
+          <Form.Item
+            label="Discount"
+            name="discount"
+            rules={[{ required: true, message: "Enter category name" }]}
+          >
+            <Input type="number" size="large" />
+          </Form.Item>
+          <Form.Item
+            label="Color"
+            name="colors"
+            rules={[{ required: true, message: "Enter category name" }]}
           >
             <Input size="large" />
           </Form.Item>
           <Form.Item
-            label="Select category"
-            name="category_id"
-            rules={[{ required: true, message: "Enter category name" }]}
-          >
-            <Select size="large" options={category} />
-          </Form.Item>
-          <Form.Item
-            label="Brand image"
-            name="file"
-            rules={[{ required: true, message: "Enter brand image" }]}
-          >
-            <Input onChange={handleImageChange} type="file" size="large" />
-          </Form.Item>
-          <Form.Item
             label="Description"
             name="description"
-            rules={[{ required: true, message: "Enter brand description" }]}
+            rules={[{ required: true, message: "Enter category name" }]}
           >
             <TextArea size="large" />
+          </Form.Item>
+          <Form.Item
+            label="Image"
+            name="files"
+            rules={[{ required: true, message: "Enter category name" }]}
+          >
+            <Input type="file" onChange={handleImageChange} size="large" />
           </Form.Item>
           <Form.Item>
             <Button

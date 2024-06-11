@@ -1,9 +1,9 @@
 import React from "react";
 import {
-    HomeOutlined,
     ProductOutlined,
     AppstoreOutlined,
     SettingOutlined,
+    StockOutlined
   } from '@ant-design/icons';
 
 interface Route{
@@ -15,11 +15,6 @@ interface Route{
 export const routes: Route[] = [
     {
         path: "/",
-        content: "Main",
-        icon: <HomeOutlined style={{fontSize: 20}} />
-    },
-    {
-        path: "/products",
         content: "Products",
         icon: <ProductOutlined style={{fontSize: 20}} />
     },
@@ -37,6 +32,11 @@ export const routes: Route[] = [
         path: "/brand-category",
         content: "Brand category",
         icon: <AppstoreOutlined style={{fontSize: 20}} />
+    },
+    {
+        path: "/stock",
+        content: "Stock",
+        icon: <StockOutlined style={{fontSize: 20}} />
     },
     {
         path: "/settings",

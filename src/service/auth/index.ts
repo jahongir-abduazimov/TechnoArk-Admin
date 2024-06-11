@@ -6,4 +6,5 @@ export const auth: Request = {
   sign_up: (data) => request.post("/auth/admin/sign-up", data),
   get_admin: (id) => request.get(`/admin/${id}`),
   update_admin: (id, data) => request.patch(`/admin/${id}`, data),
+  delete_admin: (id) => request.delete(`/admin/${id}`),
 };

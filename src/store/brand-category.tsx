@@ -11,7 +11,6 @@ const useBrandCategoryStore = create<BrandCategoryStore>((set) => ({
     set({ isLoading: true });
     try {
       const response = await brand_category.get_brand_category(params);
-      console.log(response);
       if (response.status === 200) {
         set({
           totalCount: Math.ceil(response.data.data.count),

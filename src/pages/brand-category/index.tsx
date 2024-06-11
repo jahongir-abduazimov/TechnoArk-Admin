@@ -33,7 +33,7 @@ const index = () => {
       dataIndex: "action",
       key: "action",
       render: (_: any, record: any) => (
-        <div className="flex gap-3">
+        <div className="flex gap-5">
           <UpdateBrandCategory record={record} />
           <DeleteBrandCategory record={record} />
         </div>
@@ -48,7 +48,7 @@ const index = () => {
   }
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-3">
         <Input
           onChange={(e) => search(e.target.value)}
           placeholder="Search category brand..."
@@ -57,7 +57,7 @@ const index = () => {
         <AddBrandCategory />
       </div>
       <Table columns={columns} data={brand_category} boolean={isLoading} />
-      <Pagination total={totalCount} onChange={(e)=>page(e)}/>
+      <Pagination style={{marginTop: "20px"}} total={totalCount} onChange={(e)=>page(e)}/>
     </>
   );
 };

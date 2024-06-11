@@ -100,7 +100,7 @@ const MyModal: React.FC = () => {
         onCancel={handleCancel}
         title="Add new product"
         footer
-        style={{ maxWidth: "450px", position: "relative", top: "10px" }}
+        style={{ maxWidth: "450px", position: "relative", top: "50px" }}
       >
         <Form
           form={form}

@@ -1,14 +1,17 @@
 import useBrandsStore from "../../../store/brands";
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal, Select } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import { SomeComponentProps } from "@interfaces";
+import useCategoryStore from "../../../store/category";
 const MyModal: React.FC<SomeComponentProps> = ({ record }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { updateBrand } = useBrandsStore();
+  const { getCategories } = useCategoryStore();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useState([]);
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -21,9 +24,29 @@ const MyModal: React.FC<SomeComponentProps> = ({ record }) => {
     }
     setLoading(false);
   };
+  const [params] = useState({
+    limit: 10,
+    page: 1,
+  });
+  const handleChange = async () => {
+    const response = await getCategories(params);
+    if (response?.status === 200) {
+      setCategory(
+        response.data.data.categories.map((item: any) => ({
+          label: item.name,
+          value: item.id,
+        }))
+      );
+    }
+  };
   return (
     <>
-      <Button onClick={() => setIsModalVisible(true)} icon={<EditOutlined />} />
+      <div onClick={handleChange}>
+        <Button
+          onClick={() => setIsModalVisible(true)}
+          icon={<EditOutlined />}
+        />
+      </div>
       <Modal
         open={isModalVisible}
         onCancel={handleCancel}
@@ -40,17 +63,25 @@ const MyModal: React.FC<SomeComponentProps> = ({ record }) => {
         >
           <Form.Item
             label="Brand name"
-            name="brand_name"
+            name="name"
             rules={[{ required: true, message: "Enter category name" }]}
-            initialValue={record?.brand_name}
+            initialValue={record?.name}
           >
             <Input size="large" />
           </Form.Item>
           <Form.Item
-            label="Brand description"
-            name="brand_description"
+            label="Select category"
+            name="categoryId"
             rules={[{ required: true, message: "Enter category name" }]}
-            initialValue={record?.brand_description}
+            initialValue={record?.category_id}
+          >
+            <Select size="large" options={category} />
+          </Form.Item>
+          <Form.Item
+            label="Brand description"
+            name="description"
+            rules={[{ required: true, message: "Enter category name" }]}
+            initialValue={record?.description}
           >
             <TextArea size="large" />
           </Form.Item>

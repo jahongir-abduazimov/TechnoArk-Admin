@@ -6,5 +6,19 @@ import Category from "./category";
 import SubCategory from "./subcategory";
 import Brands from "./brands";
 import Settings from "./settings";
-import BrandCategory from './brand-category'
-export { Home, SignIn, SignUp, Products, Category, SubCategory, Brands, Settings, BrandCategory };
+import BrandCategory from "./brand-category";
+import Stock from "./stock";
+import SingleProduct from "./single-product";
+export {
+  Home,
+  SignIn,
+  SignUp,
+  Products,
+  Category,
+  SubCategory,
+  Brands,
+  Settings,
+  BrandCategory,
+  Stock,
+  SingleProduct,
+};

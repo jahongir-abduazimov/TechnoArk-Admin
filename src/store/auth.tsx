@@ -3,7 +3,7 @@ import { AuthStore } from "@interfaces";
 import { auth } from "@services";
 import Notification from "@notification";
 const useAuthStore = create<AuthStore>((set) => ({
-  data:[],
+  data: [],
   getData: async (data: any) => {
     try {
       const response = await auth.sign_in(data);
@@ -16,11 +16,11 @@ const useAuthStore = create<AuthStore>((set) => ({
     try {
       const response = await auth.sign_up(data);
       return response;
-    } catch (error:any) {
+    } catch (error: any) {
       Notification({
         title: error.response.data.message,
         type: "error",
-      })
+      });
     }
   },
   getAdmin: async (id) => {
@@ -41,7 +41,15 @@ const useAuthStore = create<AuthStore>((set) => ({
     } catch (error) {
       console.error(error);
     }
-  }
+  },
+  deleteAdmin: async (id) => {
+    try {
+      const response = await auth.delete_admin(id);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 }));
 
 export default useAuthStore;

@@ -14,6 +14,14 @@ import DeleteSubCategory from './delete-subcategory'
 import AddProduct from './product'
 import DeleteProduct from './delete-product'
 import UpdateProduct from './update-product'
+import DeleteAccount from './delete-account'
+import UpdateAccount from './account-update'
+import ProductDetail from './product-detail'
+import Stock from './stock'
+import DeleteStock from './delete-stock'
+import UpdateStock from './update-stock'
+import DeleteDetail from './delete-detail'
+import UpdateDetail from './update-detail'
 export {
   Category,
   LogOut,
@@ -30,5 +38,13 @@ export {
   AddProduct,
   UpdateSubCategory,
   DeleteProduct,
-  UpdateProduct
+  UpdateProduct,
+  DeleteAccount,
+  UpdateAccount,
+  ProductDetail,
+  Stock,
+  DeleteStock,
+  UpdateStock,
+  DeleteDetail,
+  UpdateDetail
 };

@@ -7,17 +7,22 @@ const useCategoryStore = create<CategoryStore>((set) => ({
   categories: [],
   subCategories: [],
   isLoading: false,
+  totalCount: 1,
+  totalSubCategories: 1,
   getCategories: async (params) => {
     set({ isLoading: true });
     try {
       const response = await category.get_categories(params);
       if (response.status === 200) {
-        set({ categories: response.data.data.categories });
+        set({
+          totalCount: Math.ceil(response.data.data.count),
+          categories: response.data.data.categories,
+        });
       }
       set({ isLoading: false });
       return response;
     } catch (error: any) {
-      set({isLoading: false})
+      set({ isLoading: false });
       Notification({
         title: error.message,
         type: "error",
@@ -40,7 +45,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
       return response;
     } catch (error: any) {
       Notification({
-        title: "Somthing went wrong!",
+        title: error.response.data.message,
         type: "error",
       });
     }
@@ -55,7 +60,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         });
         set((state) => ({
           categories: state.categories.map((item: any) =>
-            item.id === id? response.data.data : item
+            item.id === id ? response.data.data : item
           ),
         }));
       }
@@ -92,7 +97,10 @@ const useCategoryStore = create<CategoryStore>((set) => ({
     try {
       const response = await category.get_subcategory(id, parmas);
       if (response.status === 200) {
-        set({ subCategories: response.data.data.subcategories });
+        set({
+          totalSubCategories: Math.ceil(response.data.data.count),
+          subCategories: response.data.data.subcategories,
+        });
       }
       set({ isLoading: false });
       return response;
@@ -134,7 +142,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         });
         set((state) => ({
           subCategories: state.subCategories.filter(
-            (item: any) => item.id!= id
+            (item: any) => item.id != id
           ),
         }));
       }
@@ -156,7 +164,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         });
         set((state) => ({
           subCategories: state.subCategories.map((item: any) =>
-            item.id === id? response.data.data : item
+            item.id === id ? response.data.data : item
           ),
         }));
       }
@@ -167,7 +175,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         type: "error",
       });
     }
-  }
+  },
 }));
 
 export default useCategoryStore;

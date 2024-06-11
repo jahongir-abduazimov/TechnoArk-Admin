@@ -3,11 +3,11 @@ import { Category } from "@modals";
 import useCategoryStore from "../../store/category";
 import { useEffect, useState } from "react";
 import { DeleteModal, UpdateCategory } from "@modals";
-import { EyeOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { EnterOutlined } from "@ant-design/icons";
+import { Button, Input, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 const index = () => {
-  const { getCategories, isLoading, categories } = useCategoryStore();
+  const { getCategories, isLoading, categories, totalCount } = useCategoryStore();
   const navigate = useNavigate();
   
   const [params, setParams] = useState({
@@ -36,12 +36,12 @@ const index = () => {
       dataIndex: "action",
       key: "action",
       render: (_: any, record: any) => (
-        <div className="flex gap-3">
+        <div className="flex gap-5">
           <UpdateCategory record={record} />
           <DeleteModal record={record} />
           <Button
             onClick={() => navigate(`/categories/${record.id}`)}
-            icon={<EyeOutlined />}
+            icon={<EnterOutlined />}
           />
         </div>
       ),
@@ -50,9 +50,12 @@ const index = () => {
   const search = (value: any) => {
     setParams((prevParams) => ({ ...prevParams, search: value }));
   };
+  const page = (page:any) => {
+    setParams((prevParams) => ({...prevParams, page: page }));
+  }
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-3">
         <Input
           onChange={(e: any) => search(e.target.value)}
           placeholder="Search category..."
@@ -62,6 +65,7 @@ const index = () => {
         <Category />
       </div>
       <Table columns={columns} data={categories} boolean={isLoading} />
+      <Pagination style={{marginTop: "20px"}} total={totalCount} onChange={(e)=>page(e)}/>
     </>
   );
 };

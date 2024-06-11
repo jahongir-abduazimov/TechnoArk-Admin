@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Notification from "@notification";
 import useAuthStore from "../../store/auth";
 import { useEffect, useState } from "react";
-import { getDataFromCookie } from "@data-service";
+import { getDataFromCookie, setDataToCookie } from "@data-service";
 const index = () => {
   const { createData } = useAuthStore();
   const [loading, setLoading] = useState(false);
@@ -14,11 +14,14 @@ const index = () => {
     setLoading(true);
     const response = await createData(value);
     if (response?.status === 201) {
+      setDataToCookie("access_token", response.data.data.tokens.access_token);
+      setDataToCookie("refresh_token", response.data.data.tokens.refresh_token);
+      setDataToCookie("admin_id", response.data.data.data.id);
       Notification({
-        title: "Successfully registered",
+        title: "Successfully created account",
         type: "success",
       });
-      navigate("/signin");
+      navigate("/");
     }
     setLoading(false);
   };

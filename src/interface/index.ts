@@ -16,6 +16,7 @@ export interface Request {
   sign_up: (data: Signup) => any;
   get_admin: (id:any) => any;
   update_admin: (id:any, data: any) => any;
+  delete_admin: (id:number) => any;
 }
 
 export interface AuthStore {
@@ -24,6 +25,7 @@ export interface AuthStore {
   createData: (data: Signup) => Promise<any>;
   getAdmin: (id:any) => Promise<any>;
   updateAdmin: (id:any, data: any) => Promise<any>;
+  deleteAdmin: (id:number) => Promise<any>;
 }
 
 // ------------ Category ----------------
@@ -43,6 +45,8 @@ export interface CategoryStore {
   categories: any[];
   subCategories: any[];
   isLoading: boolean;
+  totalCount: number;
+  totalSubCategories: number;
   getCategories: (params: any) => Promise<any>;
   createCategory: (data: any) => Promise<any>;
   updateCategory: (id: number, data: any) => Promise<any>;
@@ -71,6 +75,7 @@ export interface BrandRequest {
 export interface BrandStore {
   brand: any[];
   isLoading: boolean;
+  totalCount: number;
   getBrands: (params: any) => Promise<any>;
   getBrandsByCategory: (id: any) => Promise<any>;
   createBrand: (data: Brand) => Promise<any>;
@@ -116,6 +121,7 @@ export interface ProductParams {
 
 export interface ProductRequest {
   get_products: (params: ProductParams) => any;
+  get_product_by_id: (id: number) => any;
   create_product: (data: Product) => any;
   delete_product: (id: number) => any;
   update_product: (id: number, data: any) => any;
@@ -126,9 +132,49 @@ export interface ProductStore {
   isLoading: boolean;
   totalCount: number;
   getProducts: (params: ProductParams) => Promise<any>;
+  getProductById: (id: number) => Promise<any>;
   createProduct: (data: Product) => Promise<any>;
   deleteProduct: (id: number) => Promise<any>;
   updateProduct: (id: number, data: any) => Promise<any>;
+}
+
+// ------------ Stock ----------------
+
+
+
+export interface StockRequest {
+  get_stocks: (params:any) => any;
+  get_stock_by_brand: (id: any) => any;
+  create_stock: (data: any) => any;
+  delete_stock: (id: number) => any;
+  update_stock: (id: number, data: any) => any;
+}
+
+export interface StockStore {
+  stocks: any[];
+  isLoading: boolean;
+  totalCount: number;
+  getStocks: (params:any) => Promise<any>;
+  get_stock_by_brand: (id: any) => Promise<any>;
+  createStock: (data: any) => Promise<any>;
+  deleteStock: (id: number) => Promise<any>;
+  updateStock: (id: number, data: any) => Promise<any>;
+}
+
+// ------------ Product detail ----------------
+
+export interface ProductDetailRequest {
+  // get_product_detail: (params: any) => any;
+  // get_product_detail_by_product: (id: any) => any;
+  create_product_detail: (data: any) => any;
+  delete_product_detail: (id: number) => any;
+  update_product_detail: (id: number, data: any) => any;
+}
+
+export interface ProductDetailStore {
+  createProductDetail: (data: any) => Promise<any>;
+  deleteProductDetail: (id: number) => Promise<any>;
+  updateProductDetail: (id: number, data: any) => Promise<any>;
 }
 
 // ------------ Global ----------------

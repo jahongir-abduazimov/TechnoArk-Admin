@@ -13,7 +13,6 @@ const index = () => {
   const handleSubmit = async (value: any) => {
     setLoading(true);
     const response = await getData(value);
-    console.log(response);
     if (response?.status === 201) {
       setDataToCookie("access_token", response.data.data.tokens.access_token);
       setDataToCookie("refresh_token", response.data.data.tokens.refresh_token);

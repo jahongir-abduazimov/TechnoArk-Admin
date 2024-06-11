@@ -1,24 +1,23 @@
 import { create } from "zustand";
-import { BrandStore } from "@interfaces";
-import { brands } from "@services";
+import { StockStore } from "@interfaces";
+import { stock } from "@services";
 import Notification from "@notification";
 
-const useBrandsStore = create<BrandStore>((set) => ({
-  brand: [],
+const useStockStore = create<StockStore>((set) => ({
+  stocks: [],
   isLoading: false,
   totalCount: 1,
-  getBrands: async (params) => {
+  getStocks: async (params) => {
     set({ isLoading: true });
     try {
-      const response = await brands.get_brands(params);
+      const response = await stock.get_stocks(params);
       if (response.status === 200) {
         set({
           totalCount: Math.ceil(response.data.data.count),
-          brand: response.data.data.brands,
+          stocks: response.data.data.stocks,
         });
       }
       set({ isLoading: false });
-      return response;
     } catch (error: any) {
       set({ isLoading: false });
       Notification({
@@ -27,9 +26,12 @@ const useBrandsStore = create<BrandStore>((set) => ({
       });
     }
   },
-  getBrandsByCategory: async (id) => {
+  get_stock_by_brand: async (id) => {
     try {
-      const response = await brands.get_brands_by_category(id);
+      const response = await stock.get_stock_by_brand(id);
+      if (response.status === 200) {
+        set({ stocks: response.data.data });
+      }
       return response;
     } catch (error: any) {
       Notification({
@@ -38,37 +40,17 @@ const useBrandsStore = create<BrandStore>((set) => ({
       });
     }
   },
-  createBrand: async (data) => {
+  createStock: async (data) => {
     try {
-      const response = await brands.create_brand(data);
+      const response = await stock.create_stock(data);
       if (response.status === 201) {
         set((state) => ({
-          brand: [...state.brand, response.data.data],
+          stocks: [...state.stocks, response.data.data],
         }));
         Notification({
           title: response.data.message,
           type: "success",
         });
-      }
-      return response;
-    } catch (error: any) {
-      Notification({
-        title: error.response.data.message,
-        type: "error",
-      });
-    }
-  },
-  deleteBrand: async (id) => {
-    try {
-      const response = await brands.delete_brand(id);
-      if (response.status === 200) {
-        Notification({
-          title: response.data.message,
-          type: "success",
-        });
-        set((state) => ({
-          brand: state.brand.filter((item: any) => item.id != id),
-        }));
       }
       return response;
     } catch (error: any) {
@@ -78,19 +60,39 @@ const useBrandsStore = create<BrandStore>((set) => ({
       });
     }
   },
-  updateBrand: async (id, data) => {
+  deleteStock: async (id) => {
     try {
-      const response = await brands.update_brand(id, data);
+      const response = await stock.delete_stock(id);
       if (response.status === 200) {
+        set((state) => ({
+          stocks: state.stocks.filter((item: any) => item.id != id),
+        }));
         Notification({
           title: response.data.message,
           type: "success",
         });
+      }
+      return response;
+    } catch (error: any) {
+      Notification({
+        title: "Something went wrong!",
+        type: "error",
+      });
+    }
+  },
+  updateStock: async (id, data) => {
+    try {
+      const response = await stock.update_stock(id, data);
+      if (response.status === 200) {
         set((state) => ({
-          brand: state.brand.map((item: any) =>
+          stocks: state.stocks.map((item: any) =>
             item.id === id ? response.data.data : item
           ),
         }));
+        Notification({
+          title: response.data.message,
+          type: "success",
+        });
       }
       return response;
     } catch (error: any) {
@@ -102,4 +104,4 @@ const useBrandsStore = create<BrandStore>((set) => ({
   },
 }));
 
-export default useBrandsStore;
+export default useStockStore;

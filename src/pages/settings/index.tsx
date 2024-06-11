@@ -1,16 +1,29 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuthStore from "../../store/auth";
-import { getDataFromCookie } from "@data-service";
+import { getDataFromCookie, removeDataFromCookie } from "@data-service";
 import ProfilImage from "../../assets/images.png";
+import { DeleteAccount, UpdateAccount } from "@modals";
+import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
 const index = () => {
   const { getAdmin, data } = useAuthStore();
-  const id = getDataFromCookie("admin_id");
+  const id: any = getDataFromCookie("admin_id");
+  const [admin, setAdmin] = useState()
+  const navigate = useNavigate();
   const getData = async () => {
-    await getAdmin(id);
+    const response = await getAdmin(id);
+    setAdmin(response.data.data);
   };
   useEffect(() => {
     getData();
   }, []);
+  const createAccount = () => {
+    removeDataFromCookie("admin_id");
+    removeDataFromCookie("access_token");
+    removeDataFromCookie("refresh_token");
+    navigate("/signup");
+    window.location.reload();
+  }
   return (
     <>
       <div className="flex gap-x-[200px] items-start">
@@ -31,6 +44,13 @@ const index = () => {
           <div>
             <p>Phon number</p>
             <p className="font-semibold text-[20px]">{data?.phone_number}</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <Button size="large" onClick={createAccount} type="primary" style={{backgroundColor: "#59B259"}}>
+              Create account
+            </Button>
+            <UpdateAccount data={admin}/>
+            <DeleteAccount />
           </div>
         </div>
       </div>

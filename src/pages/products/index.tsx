@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import useProductStore from "../../store/products";
 import Table from "@global-table";
-import { Input } from "antd";
+import { Button, Input, Pagination } from "antd";
 import { AddProduct, DeleteProduct, UpdateProduct } from "@modals";
+import { EnterOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 const index = () => {
-  const { getProducts, isLoading, products } = useProductStore();
+  const { getProducts, isLoading, products, totalCount } = useProductStore();
+  const navigate = useNavigate();
   const columns = [
     {
       title: "№",
@@ -14,7 +17,7 @@ const index = () => {
       width: "52px",
     },
     {
-      title: "Category name",
+      title: "Product name",
       dataIndex: "name",
       key: "name",
     },
@@ -23,9 +26,13 @@ const index = () => {
       dataIndex: "action",
       key: "action",
       render: (_: any, record: any) => (
-        <div className="flex gap-3">
+        <div className="flex gap-5">
           <UpdateProduct record={record} />
           <DeleteProduct record={record} />
+          <Button
+            onClick={() => navigate(`/products/${record.id}`)}
+            icon={<EnterOutlined />}
+          />
         </div>
       ),
     },
@@ -41,9 +48,12 @@ const index = () => {
   const search = (value: any) => {
     setParams((prevParams) => ({ ...prevParams, search: value }));
   };
+  const page = (page:any) => {
+    setParams((prevParams) => ({...prevParams, page: page }));
+  }
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-3">
         <Input
           onChange={(e: any) => search(e.target.value)}
           placeholder="Search product..."
@@ -53,6 +63,7 @@ const index = () => {
         <AddProduct />
       </div>
       <Table columns={columns} data={products} boolean={isLoading} />
+      <Pagination style={{marginTop: "20px"}} total={totalCount} onChange={(e)=>page(e)}/>
     </>
   );
 };
