@@ -177,6 +177,23 @@ export interface ProductDetailStore {
   updateProductDetail: (id: number, data: any) => Promise<any>;
 }
 
+// ------------ Ads ----------------
+
+export interface AdsRequest {
+  get_ads: () => any;
+  create_ads: (data: any) => any;
+  delete_ads: (id: number) => any;
+  // update_ads: (id: number, data: any) => any;
+}
+
+export interface AdsStore {
+  ads: any[];
+  isLoading: boolean;
+  getAds: () => Promise<any>;
+  createAds: (data: any) => Promise<any>;
+  deleteAds: (id: number) => Promise<any>;
+}
+
 // ------------ Global ----------------
 
 export interface TableProps {

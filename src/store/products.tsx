@@ -42,6 +42,7 @@ const useProductStore = create<ProductStore>((set) => ({
   createProduct: async (data) => {
     try {
       const response = await product.create_product(data);
+      console.log(response);
       if (response.status === 201) {
         set((state) => ({
           products: [...state.products, response.data.data],
@@ -53,6 +54,7 @@ const useProductStore = create<ProductStore>((set) => ({
       }
       return response;
     } catch (error: any) {
+      console.log(error);
       Notification({
         title: error.message,
         type: "error",

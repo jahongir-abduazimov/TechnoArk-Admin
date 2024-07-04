@@ -5,4 +5,5 @@ import { brand_category } from './brand-category'
 import { product } from "./products";
 import { productDetail } from "./product-detail";
 import { stock } from "./stock";
-export { auth, category, brands, brand_category, product, productDetail, stock };
+import { ads } from "./ads";
+export { auth, category, brands, brand_category, product, productDetail, stock, ads };

@@ -1,8 +1,8 @@
 /* Custom hover styles for Menu.Item */
 .ant-menu-items {
-    background-color: #1677FF
+    background-color: #D55200
 }
 .ant-menu-items:hover {
-    background-color: #1677FF !important;  /* Change to desired hover background color */
+    background-color: #D55200 !important;  /* Change to desired hover background color */
     /* color: #1890ff !important;  Change to desired hover text color */
 }

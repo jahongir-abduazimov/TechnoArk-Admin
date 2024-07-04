@@ -4,6 +4,7 @@ import { Button, Layout, Menu, theme } from "antd";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { routes } from "../router/router";
 import { LogOut } from "@modals";
+import Logo from "../assets/logo.svg";
 import "./index.css";
 
 const { Header, Sider, Content } = Layout;
@@ -31,7 +32,7 @@ const App: React.FC = () => {
             className="demo-logo-vertical cursor-pointer h-[60px] my-2 flex items-center mx-3"
           >
             <img
-              src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+              src={Logo}
               alt="logo"
               className="w-[40px]"
             />
@@ -42,11 +43,11 @@ const App: React.FC = () => {
             className="demo-logo-vertical cursor-pointer mx-3 my-2 h-[60px] flex items-center gap-3"
           >
             <img
-              src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+              src={Logo}
               alt="logo"
               className="w-[40px]"
             />
-            <span className="text-[20px] text-[#fff]">Admin</span>
+            <span className="text-[20px] text-[#fff]">TechnoArk</span>
           </div>
         )}
         <Menu theme="dark" selectedKeys={["none"]}>

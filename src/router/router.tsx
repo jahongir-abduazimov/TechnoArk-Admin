@@ -34,6 +34,11 @@ export const routes: Route[] = [
         icon: <AppstoreOutlined style={{fontSize: 20}} />
     },
     {
+        path: "/ads",
+        content: "Ads",
+        icon: <AppstoreOutlined style={{fontSize: 20}} />
+    },
+    {
         path: "/stock",
         content: "Stock",
         icon: <StockOutlined style={{fontSize: 20}} />

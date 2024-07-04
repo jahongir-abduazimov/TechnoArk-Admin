@@ -15,18 +15,20 @@ const index = () => {
       key: "index",
       render: (_: any, __: any, index: any) => index + 1,
       width: "52px",
+      align: "center",
     },
     {
       title: "Product name",
       dataIndex: "name",
       key: "name",
+      align: "center",
     },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
       render: (_: any, record: any) => (
-        <div className="flex gap-5">
+        <div className="flex gap-5 justify-center">
           <UpdateProduct record={record} />
           <DeleteProduct record={record} />
           <Button
@@ -35,6 +37,7 @@ const index = () => {
           />
         </div>
       ),
+      align: "center",
     },
   ];
   const [params, setParams] = useState({
@@ -48,9 +51,9 @@ const index = () => {
   const search = (value: any) => {
     setParams((prevParams) => ({ ...prevParams, search: value }));
   };
-  const page = (page:any) => {
-    setParams((prevParams) => ({...prevParams, page: page }));
-  }
+  const page = (page: any) => {
+    setParams((prevParams) => ({ ...prevParams, page: page }));
+  };
   return (
     <>
       <div className="flex justify-between mb-3">
@@ -63,7 +66,11 @@ const index = () => {
         <AddProduct />
       </div>
       <Table columns={columns} data={products} boolean={isLoading} />
-      <Pagination style={{marginTop: "20px"}} total={totalCount} onChange={(e)=>page(e)}/>
+      <Pagination
+        style={{ marginTop: "20px" }}
+        total={totalCount}
+        onChange={(e) => page(e)}
+      />
     </>
   );
 };

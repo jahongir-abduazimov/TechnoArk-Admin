@@ -22,18 +22,21 @@ const index = () => {
       key: "index",
       render: (_: any, __: any, index: any) => index + 1,
       width: "52px",
+      align: "center",
     },
     {
       title: "Category name",
       dataIndex: "name",
       key: "name",
+      align: "center",
     },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
+      align: "center",
       render: (_: any, record: any) => (
-        <div className="flex gap-5">
+        <div className="flex gap-5 justify-center">
           <UpdateBrandCategory record={record} />
           <DeleteBrandCategory record={record} />
         </div>

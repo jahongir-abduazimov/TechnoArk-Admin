@@ -7,25 +7,21 @@ const MyModal: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { createProductDetail } = useProductDetailStore();
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState([]);
   const [form] = Form.useForm();
   const { id } = useParams();
-  const handleImageChange = (event: any) => {
-    setImage(event.target.files[0]);
-  };
   const handleCancel = () => {
     setIsModalVisible(false);
   };
   const handleSubmit = async (value: any) => {
     setLoading(true);
-    const formData: any = new FormData();
-    formData.append("files", image);
-    formData.append("quantity", value.quantity);
-    formData.append("discount", value.discount);
-    formData.append("colors", value.colors);
-    formData.append("description", value.description);
-    formData.append("product_id", id);
-    const response = await createProductDetail(formData);
+    const payload = {
+      product_id: Number(id),
+      quantity: Number(value.quantity),
+      description: value.description,
+      discount: Number(value.discount),
+      colors: value.colors,
+    }
+    const response = await createProductDetail(payload);
     if (response?.status === 201) {
       setIsModalVisible(false);
       form.resetFields();
@@ -48,7 +44,7 @@ const MyModal: React.FC = () => {
         onCancel={handleCancel}
         title="Add new category"
         footer
-        style={{ maxWidth: "450px", position: "relative", top: "0px" }}
+        style={{ maxWidth: "450px"}}
       >
         <Form
           form={form}
@@ -84,13 +80,6 @@ const MyModal: React.FC = () => {
             rules={[{ required: true, message: "Enter category name" }]}
           >
             <TextArea size="large" />
-          </Form.Item>
-          <Form.Item
-            label="Image"
-            name="files"
-            rules={[{ required: true, message: "Enter category name" }]}
-          >
-            <Input type="file" onChange={handleImageChange} size="large" />
           </Form.Item>
           <Form.Item>
             <Button

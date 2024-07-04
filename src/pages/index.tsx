@@ -9,6 +9,7 @@ import Settings from "./settings";
 import BrandCategory from "./brand-category";
 import Stock from "./stock";
 import SingleProduct from "./single-product";
+import Ads from "./ads";
 export {
   Home,
   SignIn,
@@ -19,6 +20,7 @@ export {
   Brands,
   Settings,
   BrandCategory,
+  Ads,
   Stock,
   SingleProduct,
 };

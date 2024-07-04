@@ -22,6 +22,8 @@ import DeleteStock from './delete-stock'
 import UpdateStock from './update-stock'
 import DeleteDetail from './delete-detail'
 import UpdateDetail from './update-detail'
+import Ads from './ads'
+import DeleteAds from './ads-delete'
 export {
   Category,
   LogOut,
@@ -46,5 +48,7 @@ export {
   DeleteStock,
   UpdateStock,
   DeleteDetail,
-  UpdateDetail
+  UpdateDetail,
+  Ads,
+  DeleteAds,
 };

@@ -7,9 +7,10 @@ import { EnterOutlined } from "@ant-design/icons";
 import { Button, Input, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 const index = () => {
-  const { getCategories, isLoading, categories, totalCount } = useCategoryStore();
+  const { getCategories, isLoading, categories, totalCount } =
+    useCategoryStore();
   const navigate = useNavigate();
-  
+
   const [params, setParams] = useState({
     limit: 10,
     page: 1,
@@ -25,18 +26,21 @@ const index = () => {
       key: "index",
       render: (_: any, __: any, index: any) => index + 1,
       width: "52px",
+      align: "center",
     },
     {
       title: "Category name",
       dataIndex: "name",
       key: "name",
+      align: "center",
     },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
+      align: "center",
       render: (_: any, record: any) => (
-        <div className="flex gap-5">
+        <div className="flex gap-5 justify-center">
           <UpdateCategory record={record} />
           <DeleteModal record={record} />
           <Button
@@ -50,9 +54,9 @@ const index = () => {
   const search = (value: any) => {
     setParams((prevParams) => ({ ...prevParams, search: value }));
   };
-  const page = (page:any) => {
-    setParams((prevParams) => ({...prevParams, page: page }));
-  }
+  const page = (page: any) => {
+    setParams((prevParams) => ({ ...prevParams, page: page }));
+  };
   return (
     <>
       <div className="flex justify-between mb-3">
@@ -65,7 +69,11 @@ const index = () => {
         <Category />
       </div>
       <Table columns={columns} data={categories} boolean={isLoading} />
-      <Pagination style={{marginTop: "20px"}} total={totalCount} onChange={(e)=>page(e)}/>
+      <Pagination
+        style={{ marginTop: "20px" }}
+        total={totalCount}
+        onChange={(e) => page(e)}
+      />
     </>
   );
 };

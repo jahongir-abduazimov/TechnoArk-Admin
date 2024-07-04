@@ -1,19 +1,19 @@
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import { DeleteOutlined } from "@ant-design/icons";
-import useProductStore from "../../../store/products";
-import { SomeComponentProps } from "@interfaces";
+import useAdsStore from "../../../store/ads";
+import {SomeComponentProps} from "@interfaces";
 
 const MyModal: React.FC<SomeComponentProps> = ({ record }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { deleteProduct } = useProductStore();
+  const { deleteAds } = useAdsStore();
   const [loading, setLoading] = useState(false);
   const handleCancel = () => {
     setIsModalVisible(false);
   };
   const deleteData = async (id: number) => {
     setLoading(true);
-    const response = await deleteProduct(id);
+    const response = await deleteAds(id);
     if (response?.status === 200) {
       setIsModalVisible(false);
     }
@@ -29,7 +29,7 @@ const MyModal: React.FC<SomeComponentProps> = ({ record }) => {
         open={isModalVisible}
         onCancel={handleCancel}
         style={{ maxWidth: "400px" }}
-        title="Delete this product?"
+        title="Delete this banner?"
         footer={
           <div className="flex items-center gap-3 justify-end mt-10">
             <Button size="large" type="default" onClick={handleCancel}>

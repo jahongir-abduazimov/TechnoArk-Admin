@@ -24,13 +24,13 @@ const index = () => {
         <div className="flex flex-col gap-y-3">
           <div className="flex items-center gap-4">
             <p className="text-[20px]">Product name:</p>
-            <p className="text-[20px] font-medium text-[#1677FF]">
+            <p className="text-[20px] font-medium text-[#D55200]">
               {product.name}
             </p>
           </div>
           <div className="flex items-center gap-4">
             <p className="text-[20px]">Product price:</p>
-            <p className="text-[20px] font-medium text-[#1677FF]">
+            <p className="text-[20px] font-medium text-[#D55200]">
               {product.price} $
             </p>
           </div>
